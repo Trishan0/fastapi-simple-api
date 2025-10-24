@@ -26,3 +26,11 @@ def add_product(product: Product):
     products.append(product)
     print(f"New product added : {product}")
     return product
+
+@app.put("/products")
+def update_product(product_id: int, updated_product: Product):
+    for i in range (len(products)):
+        if products[i].id == product_id:
+            products[i] = updated_product
+            return {"message": "Product Updaed Successfully"}
+    return {"error": "No Product founf!"}
