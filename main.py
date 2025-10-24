@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 from models import Product
+from database import session, engine
+import database_models
+
 app = FastAPI()
+
+database_models.Base.metadata.create_all(bind=engine)
 
 products : list= [
     Product(id=1, name="Laptop", description="A high-end laptop", price=1500.00, in_stock=True),
@@ -11,6 +16,7 @@ products : list= [
 
 @app.get("/products")
 def get_all_products():
+    db = session()
     return products
 
 @app.get("/products/{product_id}")
