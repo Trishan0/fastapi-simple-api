@@ -20,3 +20,9 @@ def get_product_by_id(product_id: int):
             print(f"Product found : {product}")
             return product
     return {"error":"Product not found"}
+
+@app.post("/products")
+def add_product(product: Product):
+    products.append(product)
+    print(f"New product added : {product}")
+    return product
