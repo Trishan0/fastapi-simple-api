@@ -14,9 +14,21 @@ products : list= [
     Product(id=4, name="Monitor", description="4K UHD Monitor", price=400.00, in_stock=True),
 ]
 
+# Initialize database with sample products
+def init_db():
+    db = session()
+    count = db.query(database_models.Product).count()
+    
+    if count == 0:
+        for product in products:
+            db.add(database_models.Product(**product.model_dump()))
+        db.commit()
+    
+init_db()
+
 @app.get("/products")
 def get_all_products():
-    db = session()
+    # db = session()
     return products
 
 @app.get("/products/{product_id}")
